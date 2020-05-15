@@ -1,26 +1,26 @@
-import {Node} from "./node";
+import { Node } from "./node.ts";
 
 interface Result<V> {
   value: V;
-  params: Record<string, string>
+  params: Record<string, string>;
 }
 
 function typeCheck(bucket: string, path: string) {
   if (!path) {
-    throw new Error('Path is required.');
+    throw new Error("Path is required.");
   }
 
   if (!bucket) {
-    throw new Error('Bucket is required.');
+    throw new Error("Bucket is required.");
   }
 
   // when used outside of typescript, it is possible for user to pass in the wrong parameters
-  if (typeof bucket !== 'string') {
-    throw new Error('Bucket should be a string.');
+  if (typeof bucket !== "string") {
+    throw new Error("Bucket should be a string.");
   }
 
-  if (typeof path !== 'string') {
-    throw new Error('Path should be a string.');
+  if (typeof path !== "string") {
+    throw new Error("Path should be a string.");
   }
 }
 
@@ -31,12 +31,12 @@ export class RoadRunner<V> {
     typeCheck(bucket, path);
 
     // only check when building routes for performance, assume user will pass in correct values on lookup
-    if (path[0] !== '/' && path[0] !== '*') {
-      throw new Error('The first character of a path should be `/` or `*`.');
+    if (path[0] !== "/" && path[0] !== "*") {
+      throw new Error("The first character of a path should be `/` or `*`.");
     }
 
     // convert wildcards into params (we suppress them from output later)
-    path = path.replace(/\*([A-z0-9]+)?\//g, ':!/').replace(/\*$/g, ':!');
+    path = path.replace(/\*([A-z0-9]+)?\//g, ":!/").replace(/\*$/g, ":!");
 
     if (!this.buckets[bucket]) {
       this.buckets[bucket] = new Node();
@@ -60,7 +60,7 @@ export class RoadRunner<V> {
 
     return {
       value: dynamic.value,
-      params: dynamic.params
+      params: dynamic.params,
     };
   }
 }

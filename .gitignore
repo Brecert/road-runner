@@ -1,6 +1,0 @@
-coverage
-.idea
-dist
-node_modules
-tsconfig.tsbuildinfo
-*.d.ts
